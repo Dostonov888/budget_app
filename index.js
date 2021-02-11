@@ -64,13 +64,13 @@ const appData = {
                 itemIncome = prompt('Какой у вас дополнительный зароботок?', 'Таксует');
             }
             let cashIncome = +prompt('Cколько в месяц вы на этом зароботаваете?', 10000);
-            while (typeof (cashIncome) === 'string' || cashIncome === null || cashIncome === '') {
-                cashIncome = +prompt('Cколько в месяц вы на этом зароботаваете?', 10000);
-            }
+            while (typeof (cashIncome) === 'string' || cashIncome === null || cashIncome === '');
+
+
             appData.income[itemIncome] = +cashIncome;
         }
 
-        //typeof (items) === 'string' && typeof (items) != null && items != '')
+
         let addExpenses = prompt('Перечилите возможные расходы через запятую!', 'кино, театр, учеба');
         appData.addExpenses = addExpenses.toLowerCase().split(', ');
         while (typeof (addExpenses) !== 'string' || typeof (addExpenses) === null || addExpenses === '') {
@@ -79,22 +79,18 @@ const appData = {
         this.addExpenses = this.addExpenses.map(item => item.toLowerCase().trim().slice(0, 1).toUpperCase() + item.slice(1));
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
-        for (let i = 0; i < 2; i++) {
-            let expenses = prompt('Введите обязательную статью расходов');
-            while (typeof (expenses) !== "string" || typeof (expenses) === null || expenses === '') {
-                expenses = prompt('Пожалуйста введите строку');
-            }
-            console.log(expenses);
-            let answer;
-            do {
-                answer = prompt('Во сколько это обойдется?', 1000);
-            }
-            while (!isNumber(answer));
-
-
-            appData.expenses[expenses.toString().toLowerCase().split(', ')] = +answer;
-
+        let expenses;
+        do {
+            expenses = prompt('Введите обязательную статью расходов');
         }
+        while (Number.parseFloat(expenses) || typeof (expenses) === null || expenses.trim() === '');
+        console.log(expenses);
+        let answer;
+        do {
+            answer = prompt('Во сколько это обойдется?', 1000);
+        }
+        while (!isNumber(answer));
+        appData.expenses[expenses.toString().toLowerCase().split(', ')] = +answer;
 
     },
 
@@ -135,16 +131,16 @@ const appData = {
             do {
                 answer2 = +prompt('Какой годовой процент?', '18');
             }
-            while (typeof (answer2) === 'string' || typeof (answer2) === null || typeof (answer2) === '');
+            while (Number.isNaN(answer2) || typeof (answer2) === null || typeof (answer2) === '');
             let answer3;
             do {
                 answer3 = +prompt('Какая сумма заложена?', 10000);
             }
-            while (typeof (answer3) === 'string' || typeof (answer2) === null || typeof (answer2) === '');
+            while (Number.isNaN(answer3) || typeof (answer3) === null || typeof (answer3) === '');
 
 
-            appData.parcentDeposit[answer2.toString().toLowerCase().split(', ')] = +answer2;
-            appData.parcentDeposit[answer3.toString().toLowerCase().split(', ')] = +answer3;
+            appData.parcentDeposit = +answer2;
+            appData.parcentDeposit = +answer3;
         }
     },
     calcSavedMoney: function () {
