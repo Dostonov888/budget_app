@@ -59,13 +59,11 @@ const appData = {
     asking: function () {
 
         if (confirm('Есть ли у вас дополнительный источник зароботка?')) {
-            let itemIncome = prompt('Какой у вас дополнительный зароботок?', 'Таксует');
-            while (typeof (itemIncome) !== 'string' || typeof (itemIncome) === null || itemIncome === '') {
-                itemIncome = prompt('Какой у вас дополнительный зароботок?', 'Таксует');
-            }
-            let cashIncome = +prompt('Cколько в месяц вы на этом зароботаваете?', 10000);
-            while (typeof (cashIncome) === 'string' || cashIncome === null || cashIncome === '');
 
+            let itemIncome = prompt('Какой у вас дополнительный зароботок?', 'Таксую');
+            while (typeof (itemIncome) !== 'string' || itemIncome === null || itemIncome === '');
+            let cashIncome = + prompt('Cколько в месяц вы на этом зароботаваете?', 10000);
+            while (!isNumber(cashIncome) || cashIncome === null || cashIncome === '');
 
             appData.income[itemIncome] = +cashIncome;
         }
@@ -73,24 +71,25 @@ const appData = {
 
         let addExpenses = prompt('Перечилите возможные расходы через запятую!', 'кино, театр, учеба');
         appData.addExpenses = addExpenses.toLowerCase().split(', ');
-        while (typeof (addExpenses) !== 'string' || typeof (addExpenses) === null || addExpenses === '') {
-            let addExpenses = prompt('Перечилите возможные расходы через запятую!', 'кино, театр, учеба');
-        }
+        while (typeof (addExpenses) !== 'string' || addExpenses === null || addExpenses.trim === '');
         this.addExpenses = this.addExpenses.map(item => item.toLowerCase().trim().slice(0, 1).toUpperCase() + item.slice(1));
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
-        let expenses;
-        do {
-            expenses = prompt('Введите обязательную статью расходов');
+        for (let i = 0; i < 2; i++) {
+            let expenses;
+            do {
+                expenses = prompt('Введите обязательную статью расходов');
+            }
+            while (Number.parseFloat(expenses) || expenses === null || expenses.trim() === '');
+
+            let answer;
+            do {
+                answer = prompt('Во сколько это обойдется?', 1000);
+            }
+            while (!isNumber(answer));
+            appData.expenses[expenses] = +answer;
         }
-        while (Number.parseFloat(expenses) || typeof (expenses) === null || expenses.trim() === '');
-        console.log(expenses);
-        let answer;
-        do {
-            answer = prompt('Во сколько это обойдется?', 1000);
-        }
-        while (!isNumber(answer));
-        appData.expenses[expenses.toString().toLowerCase().split(', ')] = +answer;
+
 
     },
 
@@ -124,19 +123,17 @@ const appData = {
     },
     getInfoDeposit: function () {
         if (appData.deposit) {
-            // appData.parcentDeposit = +prompt('Какой годовой процент?', '18');
-            // appData.moneyDeposit = +prompt('Какая сумма заложена?', 10000);
 
             let answer2;
             do {
                 answer2 = +prompt('Какой годовой процент?', '18');
             }
-            while (Number.isNaN(answer2) || typeof (answer2) === null || typeof (answer2) === '');
+            while (Number.isNaN(answer2) || answer2 === null || answer2 === '');
             let answer3;
             do {
                 answer3 = +prompt('Какая сумма заложена?', 10000);
             }
-            while (Number.isNaN(answer3) || typeof (answer3) === null || typeof (answer3) === '');
+            while (Number.isNaN(answer3) || answer3 === null || answer3 === '');
 
 
             appData.parcentDeposit = +answer2;
