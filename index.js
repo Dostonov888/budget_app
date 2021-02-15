@@ -49,6 +49,7 @@ let appData = {
     deposit: false,// любое булево значение
     parcentDeposit: 0,
     moneyDeposit: 0,
+
     startOff: function () {
         if (salaryAmount.value === '') {
             start.disabled = true;
@@ -65,8 +66,8 @@ let appData = {
         appData.getBudget();
         appData.showResult();
 
-        appData.getTargetMonth();
-        appData.getInfoDeposit();
+        //appData.getTargetMonth();
+        //appData.getInfoDeposit();
 
     },
     showResult: function () {
@@ -76,14 +77,13 @@ let appData = {
         additionalExpensesValue.value = appData.addExpenses.join(', ');
         additionalIncomeValue.value = appData.addIncome.join(', ');
         targetMonthValue.value = Math.ceil(appData.getTargetMonth());
-        incomePeriodValue.value = appData.eventFunc();
-        periodAmount.value = appData.calcIncomPer();
+        incomePeriodValue.value = appData.calcIncomPer();
+
         periodSelect.addEventListener('mousemove', function () {
-            incomePeriodValue.value = appData.calcPeriod();
+            incomePeriodValue.value = appData.calcIncomPer();
         });
     },
     addExpensesBlock: function () {
-
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
         expensesItems = document.querySelectorAll('.expenses-items');
@@ -141,8 +141,6 @@ let appData = {
         });
     },
     getInfoDeposit: function () {
-
-
         if (depositCheck.checked) {
             let answer2;
             do {
@@ -170,22 +168,21 @@ let appData = {
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
     },
     getTargetMonth: function () {
-        return targetMonthValue.value / appData.budgetMonth;
+        return targetAmount.value / (appData.budgetMonth + 0.1);
     },
     getStatusIncome: function () {
         if (appData.budgetDay > 1200) {
-            console.log('У вас высокий уровень дохода');
+            return ('У вас высокий уровень дохода');
         } else if (appData.budgetDay > 600 && appData.budgetDay < 1200) {
-            console.log('У вас средний уровень дохода');
+            return ('У вас средний уровень дохода');
         } else if (appData.budgetDay < 600 && appData.budgetDay > 0) {
-            console.log('К сожалению у вас уровень дохода ниже среднего');
+            return ('К сожалению у вас уровень дохода ниже среднего');
         } else if (appData.budgetDay > 0 && appData.budgetDay === 600 && appData.budgetDay < 1200) {
-            console.log('К какому уровню не важно');
+            return ('К какому уровню не важно');
         }
     },
-    calcPeriod: function () {
-        return appData.budgetMonth * periodSelect.value;
-    },
+
+
     eventFunc: function (event) {
         periodAmount.textContent = periodSelect.value;
     },
