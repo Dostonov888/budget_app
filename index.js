@@ -7,7 +7,7 @@ let start = document.getElementById('start'),
     additionalIncomeItem = document.querySelectorAll('.additional_income-item'),
     depositCheck = document.querySelector('#deposit-check'),
     budgetDayValue = document.getElementsByClassName('budget_day-value')[0],
-    budgetMonthValue = document.getElementsByClassName('.budget_month-value'),
+    budgetMonthValue = document.querySelector('.budget_month-value'),
     expensesMonthValue = document.getElementsByClassName('expenses_month-value')[0],
     accumulatedMonthValue = document.getElementsByClassName('accumulated_month-value')[0],
     additionalIncomeValue = document.getElementsByClassName('additional_income-value')[0],
@@ -56,6 +56,7 @@ let appData = {
         } else { start.disabled = false; }
     },
     start: function () {
+        document.addEventListener('mouseover', appData.startOff);
         appData.budget = +salaryAmount.value;
 
         appData.getExpenses();
@@ -66,12 +67,12 @@ let appData = {
         appData.getBudget();
         appData.showResult();
 
-        //appData.getTargetMonth();
-        //appData.getInfoDeposit();
+        appData.getTargetMonth();
+        appData.getInfoDeposit();
 
     },
     showResult: function () {
-        budgetMonthValue.value = +appData.budgetMonth;
+        budgetMonthValue.value = appData.budgetMonth;
         budgetDayValue.value = appData.budgetDay;
         expensesMonthValue.value = appData.expensesMonth;
         additionalExpensesValue.value = appData.addExpenses.join(', ');
@@ -168,7 +169,7 @@ let appData = {
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
     },
     getTargetMonth: function () {
-        return targetAmount.value / (appData.budgetMonth + 0.1);
+        return targetAmount.value / budgetMonthValue.value;
     },
     getStatusIncome: function () {
         if (appData.budgetDay > 1200) {
@@ -184,21 +185,21 @@ let appData = {
 
 
     eventFunc: function (event) {
-        periodAmount.textContent = periodSelect.value;
+        return (periodAmount.textContent = periodSelect.value);
     },
     calcIncomPer: function (event) {
         return appData.budgetMonth * periodSelect.value;
     }
 
 };
-document.addEventListener('mouseover', appData.startOff);
+
 start.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
-periodSelect.addEventListener('change', appData.eventFunc);
+periodSelect.addEventListener('input', appData.eventFunc);
 
-
-
+console.log(budgetMonthValue);
+console.log(budgetDayValue);
 
 
 
