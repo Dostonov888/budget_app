@@ -67,7 +67,7 @@ let appData = {
         appData.getBudget();
         appData.showResult();
         appData.getTargetMonth();
-        appData.getInfoDeposit();
+
 
     },
     showResult: function () {
