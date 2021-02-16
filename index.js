@@ -53,10 +53,15 @@ let appData = {
     startOff: function () {
         if (salaryAmount.value === '') {
             start.disabled = true;
-        } else { start.disabled = false; }
+            start.style.background = '';
+        } else {
+            start.disabled = false;
+            start.style.background = '#66CC66';
+        }
     },
     start: function () {
-        document.addEventListener('mouseover', appData.startOff);
+        appData.expenses = {};
+        appData.addExpenses = [];
         appData.budget = +salaryAmount.value;
 
         appData.getExpenses();
@@ -114,15 +119,16 @@ let appData = {
         incomeItem.forEach(function (item) {
             let itemIncome = item.querySelector('.income-title').value;
             let cashIncome = item.querySelector('.income-amount').value;
-            if (itemIncome !== '' && cashIncome !== '') {
-                appData.addIncome[itemIncome] = cashIncome;
-            }
+
+            appData.income[itemIncome] = cashIncome;
+
+
         });
-
-
         for (let key in appData.income) {
             appData.incomeMonth += +appData.income[key];
         }
+
+
     },
     getAddExpenses: function () {
         let addExpenses = additionalExpensesItem.value.split(',');
@@ -167,6 +173,7 @@ let appData = {
     getBudget: function () {
         appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+        console.log(appData.budget);
     },
     getTargetMonth: function () {
         return targetAmount.value / budgetMonthValue.value;
@@ -185,21 +192,19 @@ let appData = {
 
 
     eventFunc: function (event) {
-        return (periodAmount.textContent = periodSelect.value);
+        periodAmount.textContent = periodSelect.value;
     },
     calcIncomPer: function (event) {
         return appData.budgetMonth * periodSelect.value;
     }
 
 };
-
+document.addEventListener('mouseover', appData.startOff);
 start.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.eventFunc);
 
-console.log(budgetMonthValue);
-console.log(budgetDayValue);
 
 
 
