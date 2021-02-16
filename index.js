@@ -16,7 +16,6 @@ let start = document.getElementById('start'),
     targetMonthValue = document.getElementsByClassName('target_month-value')[0],
     salaryAmount = document.querySelector('.salary-amount'),
     incomeTitle = document.querySelector('.income-title'),
-    //incomeAmount = document.querySelector('.income-amount'),
     expensesTitle = document.querySelector('.expenses-title'),
     additionalExpenses = document.querySelector('.additional_expenses'),
     periodSelect = document.querySelector('.period-select'),
@@ -24,23 +23,17 @@ let start = document.getElementById('start'),
     additionalExpensesItem = document.querySelector('.additional_expenses-item'),
     targetAmount = document.querySelector('.target-amount'),
     incomeItem = document.querySelectorAll('.income-items'),
-
-    // depositPercent = document.querySelector('.deposit-percent'),
-    // depositAmount = document.querySelector('.deposit-amount'),
     periodAmount = document.querySelector('.period-amount');
 
 let isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-
-
-
 let appData = {
     budget: 0,
     budgetDay: 0,// дневной бюджет
     budgetMonth: 0,//бюджет на месяц
-    income: {}, //,//с дополнительными доходом (фрелансер),строка
+    income: {}, //с дополнительными доходом (фрелансер),строка
     incomeMonth: 0,
     addIncome: [],// доп доходы
     expensesMonth: 0,//сумму всех обязательных расходов за месяц
@@ -62,8 +55,10 @@ let appData = {
     start: function () {
         appData.expenses = {};
         appData.addExpenses = [];
+        appData.expensesMonth = 0;
         appData.budget = +salaryAmount.value;
-
+        appData.incomeMonth = 0;
+        appData.addIncome = [];
         appData.getExpenses();
         appData.getIncome();
         appData.getExpensesMonth();
@@ -71,7 +66,6 @@ let appData = {
         appData.getAddIncome();
         appData.getBudget();
         appData.showResult();
-
         appData.getTargetMonth();
         appData.getInfoDeposit();
 
@@ -168,12 +162,11 @@ let appData = {
             appData.expensesMonth += +appData.expenses[key];
         }
         return appData.expensesMonth;
-
     },
+
     getBudget: function () {
         appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth;
         appData.budgetDay = Math.floor(appData.budgetMonth / 30);
-        console.log(appData.budget);
     },
     getTargetMonth: function () {
         return targetAmount.value / budgetMonthValue.value;
@@ -190,11 +183,10 @@ let appData = {
         }
     },
 
-
-    eventFunc: function (event) {
+    eventFunc: function () {
         periodAmount.textContent = periodSelect.value;
     },
-    calcIncomPer: function (event) {
+    calcIncomPer: function () {
         return appData.budgetMonth * periodSelect.value;
     }
 
