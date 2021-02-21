@@ -68,8 +68,16 @@ AppData.prototype.start = function () {
     allInput.forEach(function (item) {
         item.setAttribute('disabled', 'true');
     });
-    // expensesItems.setAttribute('disabled', 'true');
-    // expensesPlus.setAttribute('disabled', 'true');
+    if (incomeItem.value === '') {
+        incomePlus.setAttribute('disabled', 'true');
+        return;
+    }
+    if (expensesItems.value === '') {
+        expensesPlus.setAttribute('disabled', 'true');
+        return;
+    }
+
+
     start.style.display = 'none';
     cancel.style.display = 'block';
     this.expenses = {};
@@ -231,13 +239,13 @@ AppData.prototype.reset = function () {
     for (let i = 1; i < incomeItem.length; i++) {
         incomeItem[i].parentNode.removeChild(incomeItem[i]);
         incomePlus.style.display = 'block';
-
     }
+
     for (let i = 1; i < expensesItems.length; i++) {
         expensesItems[i].parentNode.removeChild(expensesItems[i]);
         expensesPlus.style.display = 'block';
-
     }
+
     this.budget = 0;
     this.budgetDay = 0;
     this.budgetMonth = 0;
@@ -256,8 +264,6 @@ AppData.prototype.reset = function () {
     expensesPlus.removeAttribute('disabled');
     incomePlus.removeAttribute('disabled');
     depositCheck.checked = false;
-
-
 };
 const appData = new AppData();
 
