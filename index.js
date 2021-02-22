@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     `${myStr}Plus`.style.display = 'none';
                 }
 
-            }
+            };
             expensesItems.forEach(count);
             incomeItem.forEach(count);
         }
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (itemTitle !== '' && itemAmount !== '') {
                     this[startStr][itemTitle] = itemAmount;
                 }
-            }
+            };
             incomeItem.forEach(count);
             expensesItems.forEach(count);
             for (const key in this.income) {
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         getTargetMonth() {
             return targetAmount.value / this.budgetMonth;
-        };
+        }
         getStatusIncome() {
             if (this.budgetDay > 1200) {
                 return ('У вас высокий уровень дохода');
@@ -256,17 +256,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
-        eventlisteners() {
-            document.addEventListener('mouseover', appData.startOff);
-            start.addEventListener('click', appData.start.bind(appData));
-            expensesPlus.addEventListener('click', appData.addExpensesBlock);
-            incomePlus.addEventListener('click', appData.addIncomeBlock);
-            periodSelect.addEventListener('input', appData.eventFunc);
-            cancel.addEventListener('click', appData.reset.bind(appData));
 
-        }
 
     }
     const newData = new AppData();
+
+    eventlisteners() {
+        document.addEventListener('mouseover', appData.startOff);
+        start.addEventListener('click', appData.start.bind(appData));
+        expensesPlus.addEventListener('click', appData.addExpensesBlock);
+        incomePlus.addEventListener('click', appData.addIncomeBlock);
+        periodSelect.addEventListener('input', appData.eventFunc);
+        cancel.addEventListener('click', appData.reset.bind(appData));
+
+    }
     newData.eventlisteners();
-}
+});
