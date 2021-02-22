@@ -121,26 +121,26 @@ let appData = {
         }
     },
     getExpenses: function () {
-        const _this = this;
         expensesItems.forEach(function (item) {
             let itemExpenses = item.querySelector('.expenses-title').value;
             let cashExpenses = item.querySelector('.expenses-amount').value;
             if (itemExpenses !== '' && cashExpenses !== '') {
-                _this.expenses[itemExpenses] = cashExpenses;
+                this.expenses[itemExpenses] = cashExpenses;
             }
 
-        });
+        }, this);
     },
     getIncome: function () {
-        const _this = this;
+
         incomeItem.forEach(function (item) {
             let itemIncome = item.querySelector('.income-title').value;
             let cashIncome = item.querySelector('.income-amount').value;
             if (itemIncome !== '' && cashIncome !== '') {
-                _this.income[itemIncome] = cashIncome;
+                this.income[itemIncome] = cashIncome;
             }
 
-        });
+        }, this);
+
         for (let key in this.income) {
             this.incomeMonth += +this.income[key];
         }
@@ -148,23 +148,21 @@ let appData = {
 
     },
     getAddExpenses: function () {
-        const _this = this;
         let addExpenses = additionalExpensesItem.value.split(',');
         addExpenses.forEach(function (item) {
             item = item.trim();
             if (item !== '') {
-                _this.addExpenses.push(item);
+                this.addExpenses.push(item);
             }
-        });
+        }, this);
     },
     getAddIncome: function () {
-        const _this = this;
         additionalIncomeItem.forEach(function (item) {
             let itemValue = item.value.trim();
             if (itemValue !== '') {
-                _this.addIncome.push(itemValue);
+                this.addIncome.push(itemValue);
             }
-        });
+        }, this);
     },
     getInfoDeposit: function () {
         if (this.depositCheck.checked) {
@@ -248,6 +246,7 @@ let appData = {
         this.deposit = false;
         this.parcentDeposit = 0;
         this.moneyDeposit = 0;
+        this.periodAmount = 1;
 
 
         cancel.style.display = 'none';
@@ -265,5 +264,5 @@ start.addEventListener('click', appData.start.bind(appData));
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.eventFunc);
 cancel.addEventListener('click', appData.reset.bind(appData));
-
+expensesPlus.addEventListener('click', appData.addExpensesBlock);
 
