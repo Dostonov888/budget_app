@@ -16,5 +16,5 @@
 	"noempty": true,
     "funcscope": true,
     "node": true,
-	"esversion": 6
+	"multistr": true
 }
