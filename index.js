@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let expensesItems = document.querySelectorAll('.expenses-items'),
         incomeItem = document.querySelectorAll('.income-items');
 
+    function isNum(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    };
 
     class AppData {
         constructor() {
@@ -50,9 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.moneyDeposit = 0;
         }
 
-        isNum(n) {
-            return !isNaN(parseFloat(n)) && isFinite(n);
-        }
+
 
         startOff() {
 
@@ -91,16 +92,17 @@ document.addEventListener('DOMContentLoaded', () => {
             this.budget = +salaryAmount.value;
             this.incomeMonth = 0;
             this.addIncome = [];
-            this.isNum();
+
             this.getExpInc();
             this.getExpensesMonth();
             this.getAddExpenses();
+            this.addIncomeBlock();
             this.getAddIncome();
             this.getInfoDeposit();
             this.getBudget();
             this.showResult();
             this.getTargetMonth();
-            this.addIncExpBlock();
+            this.addExpensesBlock();
             this.checkInfoDeposit();
         }
 
@@ -120,18 +122,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        addIncExpBlock() {
-            const count = item => {
-                const myStr = item.className.split('-')[0];
-                const inIt = item.querySelectorAll(`.${myStr}-items`).value;
-                if (myStr.length === 3) {
-                    `${myStr}Plus`.style.display = 'none';
-                }
-
-            };
-            expensesItems.forEach(count);
-            incomeItem.forEach(count);
+        addExpensesBlock() {
+            let cloneExpensesItem = expensesItems[0].cloneNode(true);
+            expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesPlus);
+            expensesItems = document.querySelectorAll('.expenses-items');
+            if (expensesItems.length === 3) {
+                expensesPlus.style.display = 'none';
+            }
         }
+        addIncomeBlock() {
+            let cloneIncomeItem = incomeItem[0].cloneNode(true);
+            incomeItem[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
+            incomeItem = document.querySelectorAll('.income-items');
+            if (incomeItem.length === 3) {
+                incomePlus.style.display = 'none';
+            }
+        }
+
         getExpInc() {
             const count = item => {
                 const startStr = item.className.split('-')[0];
@@ -253,16 +260,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         checkInfoDeposit() {
-            if (!this.isNum(depositPercent.value) || (depositPercent.value < 0 && depositPercent.value > 100)) {
+
+            if (!isNum(depositPercent.value) || !isNum(depositAmount.value) || (depositPercent.value < 0 && depositPercent.value >= 100 || depositAmount.value < 0 && depositAmount.value >= 100)) {
                 alert("Введите корректное значение в поле проценты");
                 start.disabled = true;
-
+                depositPercent.value = 0;
+                depositAmount.value = 0;
             }
 
-            if (!this.isNum(depositAmount.value) || (depositAmount.value < 0 && depositAmount.value > 100)) {
-                alert("Введите корректное значение в поле проценты");
-                start.disabled = true;
-            }
         }
 
 
@@ -304,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             depositCheck.addEventListener('change', this.depositHandler.bind(this));
             depositAmount.addEventListener('input', this.checkInfoDeposit);
-            depositPercent.addEventListener('input', this.checkInfoDeposit);
+            depositPercent.addEventListener('mouseout', this.checkInfoDeposit);
         }
     }
     const newData = new AppData();
