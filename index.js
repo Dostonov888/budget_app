@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.budget = +salaryAmount.value;
             this.incomeMonth = 0;
             this.addIncome = [];
+            this.isNum();
             this.getExpInc();
             this.getExpensesMonth();
             this.getAddExpenses();
@@ -100,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.showResult();
             this.getTargetMonth();
             this.addIncExpBlock();
+            this.checkInfoDeposit();
         }
 
 
@@ -233,29 +235,36 @@ document.addEventListener('DOMContentLoaded', () => {
             this.moneyDeposit = 0;
             this.periodAmount = 1;
 
+
             cancel.style.display = 'none';
             start.style.display = 'block';
             expensesPlus.removeAttribute('disabled');
             incomePlus.removeAttribute('disabled');
             depositCheck.checked = false;
             depositPercent.style.display = 'none';
+            depositPercent.value = 0;
+            depositAmount.value = 0;
         }
 
         getInfoDeposit() {
             if (this.deposit) {
                 this.percentDeposit = depositPercent.value;
                 this.moneyDeposit = depositAmount.value;
-                while (Number.isNaN(depositPercent.value) || depositPercent.value === null || depositPercent.value === '') {
-                    alert("Введите корректное значение в поле проценты");
-                    start.disabled = true;
-                }
-
-                while (Number.isNaN(depositAmount.value) || depositAmount.value === null || depositAmount.value === '') {
-                    alert("Введите корректное значение в поле проценты");
-                    start.disabled = true;
-                }
             }
         }
+        checkInfoDeposit() {
+            if (!this.isNum(depositPercent.value) || (depositPercent.value < 0 && depositPercent.value > 100)) {
+                alert("Введите корректное значение в поле проценты");
+                start.disabled = true;
+
+            }
+
+            if (!this.isNum(depositAmount.value) || (depositAmount.value < 0 && depositAmount.value > 100)) {
+                alert("Введите корректное значение в поле проценты");
+                start.disabled = true;
+            }
+        }
+
 
         changePercent() {
             const valueSelect = this.value;
@@ -294,6 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 incomePeriodValue.value = this.calcIncomPer();
             });
             depositCheck.addEventListener('change', this.depositHandler.bind(this));
+            depositAmount.addEventListener('input', this.checkInfoDeposit);
+            depositPercent.addEventListener('input', this.checkInfoDeposit);
         }
     }
     const newData = new AppData();
