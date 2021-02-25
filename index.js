@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function isNum(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
-    };
+    }
 
     class AppData {
         constructor() {
@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.getTargetMonth();
             this.addExpensesBlock();
             this.checkInfoDeposit();
+
         }
 
 
@@ -247,10 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
             start.style.display = 'block';
             expensesPlus.removeAttribute('disabled');
             incomePlus.removeAttribute('disabled');
-            depositCheck.checked = false;
             depositPercent.style.display = 'none';
             depositPercent.value = 0;
             depositAmount.value = 0;
+            depositCheck.checked = false;
         }
 
         getInfoDeposit() {
@@ -261,11 +262,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         checkInfoDeposit() {
 
-            if (!isNum(depositPercent.value) || !isNum(depositAmount.value) || (depositPercent.value < 0 && depositPercent.value >= 100 || depositAmount.value < 0 && depositAmount.value >= 100)) {
+            if (!isNum(depositPercent.value) || (depositPercent.value < 0 && depositPercent.value >= 100)) {
                 alert("Введите корректное значение в поле проценты");
                 start.disabled = true;
-                depositPercent.value = 0;
-                depositAmount.value = 0;
+                depositPercent.value = "";
             }
 
         }
@@ -308,8 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 incomePeriodValue.value = this.calcIncomPer();
             });
             depositCheck.addEventListener('change', this.depositHandler.bind(this));
-            depositAmount.addEventListener('input', this.checkInfoDeposit);
-            depositPercent.addEventListener('mouseout', this.checkInfoDeposit);
+            depositPercent.addEventListener('input', this.checkInfoDeposit.bind(this));
         }
     }
     const newData = new AppData();
