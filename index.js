@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.deposit = false;
             this.percentDeposit = 0;
             this.moneyDeposit = 0;
+            depositBank.style.display = 'none';
         }
 
 
