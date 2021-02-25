@@ -247,8 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
             expensesPlus.removeAttribute('disabled');
             incomePlus.removeAttribute('disabled');
             depositPercent.style.display = 'none';
-            depositPercent.value = 0;
-            depositAmount.value = 0;
+            depositBank.style.display = 'none';
+            depositPercent.value = '';
+            depositAmount.value = '';
             depositCheck.checked = false;
         }
 
@@ -306,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 incomePeriodValue.value = this.calcIncomPer();
             });
             depositCheck.addEventListener('change', this.depositHandler.bind(this));
-            depositPercent.addEventListener('input', this.checkInfoDeposit.bind(this));
+            depositPercent.addEventListener('input', this.checkInfoDeposit);
         }
     }
     const newData = new AppData();
