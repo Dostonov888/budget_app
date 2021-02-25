@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.expenses = {};
             this.addExpenses = [];
             this.deposit = false;
-            this.parcentDeposit = 0;
+            this.percentDeposit = 0;
             this.moneyDeposit = 0;
         }
 
@@ -93,16 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
             this.incomeMonth = 0;
             this.addIncome = [];
 
-            this.getExpInc();
+
             this.getExpensesMonth();
             this.getAddExpenses();
-            this.addIncomeBlock();
             this.getAddIncome();
             this.getInfoDeposit();
             this.getBudget();
             this.showResult();
             this.getTargetMonth();
-            this.addExpensesBlock();
             this.checkInfoDeposit();
 
         }
@@ -239,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.expenses = {};
             this.addExpenses = [];
             this.deposit = false;
-            this.parcentDeposit = 0;
+            this.percentDeposit = 0;
             this.moneyDeposit = 0;
             this.periodAmount = 1;
 
