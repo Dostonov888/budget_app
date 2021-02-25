@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.incomeMonth = 0;
             this.addIncome = [];
 
-
+            this.getExpInc();
             this.getExpensesMonth();
             this.getAddExpenses();
             this.getAddIncome();
@@ -102,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.getBudget();
             this.showResult();
             this.getTargetMonth();
-            this.checkInfoDeposit();
 
         }
 
@@ -279,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 depositPercent.value = valueSelect;
                 depositPercent.style.display = 'none';
+                depositPercent.value = '';
             }
         }
         depositHandler() {
