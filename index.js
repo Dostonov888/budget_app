@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         getBudget() {
             const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
-            this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit;
+            this.budgetMonth = Math.round(this.budget + this.incomeMonth - this.expensesMonth + monthDeposit);
             this.budgetDay = Math.floor(this.budgetMonth / 30);
         }
         getTargetMonth() {
@@ -248,8 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
             incomePlus.removeAttribute('disabled');
             depositPercent.style.display = 'none';
             depositBank.style.display = 'none';
+            depositBank.value = '';
             depositPercent.value = '';
             depositAmount.value = '';
+            depositAmount.style.display = 'none';
             depositCheck.checked = false;
         }
 
@@ -261,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         checkInfoDeposit() {
 
-            if (!isNum(depositPercent.value) || (depositPercent.value < 0 && depositPercent.value >= 100)) {
+            if (!isNum(depositPercent.value) || depositPercent.value < 0 || depositPercent.value >= 100) {
                 alert("Введите корректное значение в поле проценты");
                 start.disabled = true;
                 depositPercent.value = "";
